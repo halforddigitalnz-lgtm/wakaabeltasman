@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Waka Abel Tasman — Connect. Experience. Explore.</title>
+<meta name="description" content="Waka Abel Tasman — waka hourua journeys on the water at Kaiteretere, Abel Tasman. Connect across time and space. Public trips, school groups and corporate teams." />
+<link rel="icon" href="images/cropped-WAT_Logo-favicon-new.jpg" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,400..500&family=Instrument+Sans:ital,wght@0,400..600;1,400..500&display=swap" rel="stylesheet" />
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink:   '#0A2A38',
+          sea:   '#0E4A5F',
+          teal:  '#1B8C8C',
+          wai:   '#2E86A8',
+          coral: '#E9773C',
+          sun:   '#F2A24E',
+          sand:  '#F4E7CF',
+          foam:  '#FBF7EF',
+        },
+        fontFamily: {
+          display: ['Fraunces', 'Georgia', 'serif'],
+          sans: ['"Instrument Sans"', 'system-ui', 'sans-serif'],
+        },
+      },
+    },
+  };
+</script>
+
+<style>
+  :root { --ease: cubic-bezier(0.22, 1, 0.36, 1); }
+
+  html { scroll-behavior: smooth; }
+  body { background: #FBF7EF; color: #0A2A38; font-family: 'Instrument Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; line-height: 1.7; }
+
+  ::selection { background: #E9773C; color: #FBF7EF; }
+
+  h1, h2, h3, .font-display { font-family: 'Fraunces', Georgia, serif; }
+  .tracking-tightish { letter-spacing: -0.03em; }
+
+  /* ---------- Grain ---------- */
+  .grain::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 2;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.08; mix-blend-mode: overlay;
+  }
+
+  /* ---------- Nav ---------- */
+  #nav { transition: background-color .5s var(--ease), box-shadow .5s var(--ease), backdrop-filter .5s var(--ease), padding .4s var(--ease); }
+  #nav.scrolled { background: rgba(251,247,239,0.82); backdrop-filter: blur(14px) saturate(1.2); box-shadow: 0 1px 0 rgba(10,42,56,0.06), 0 18px 40px -28px rgba(10,42,56,0.45); }
+  #nav.scrolled .nav-link { color: #0A2A38; }
+  #nav.scrolled .nav-logo { filter: none; }
+  #nav.scrolled .nav-brand-sub { color: #0E4A5F; }
+  .nav-logo { filter: drop-shadow(0 2px 10px rgba(0,0,0,0.55)) drop-shadow(0 0 1px rgba(255,255,255,0.4)); transition: filter .5s var(--ease); }
+  .nav-link { position: relative; }
+  .nav-link::after { content: ""; position: absolute; left: 0; bottom: -4px; height: 2px; width: 100%; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .4s var(--ease); border-radius: 2px; }
+  .nav-link:hover::after, .nav-link:focus-visible::after { transform: scaleX(1); transform-origin: left; }
+
+  /* ---------- Buttons ---------- */
+  .btn { position: relative; display: inline-flex; align-items: center; gap: .6rem; font-weight: 600; border-radius: 999px; padding: .95rem 1.6rem; letter-spacing: -0.01em; transition: transform .4s var(--ease), box-shadow .4s var(--ease), background-color .4s var(--ease), color .4s var(--ease); will-change: transform; overflow: hidden; }
+  .btn:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(251,247,239,0.9), 0 0 0 6px rgba(233,119,60,0.9); }
+  .btn svg { transition: transform .4s var(--ease); }
+  .btn:hover svg { transform: translateX(4px); }
+  .btn:active { transform: translateY(1px) scale(0.99); }
+
+  .btn-primary { background: linear-gradient(120deg, #E9773C 0%, #F2A24E 100%); color: #0A2A38; box-shadow: 0 10px 24px -10px rgba(233,119,60,0.75), inset 0 1px 0 rgba(255,255,255,0.4); }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 20px 40px -14px rgba(233,119,60,0.8), inset 0 1px 0 rgba(255,255,255,0.5); }
+
+  .btn-ghost { color: #FBF7EF; border: 1px solid rgba(251,247,239,0.55); backdrop-filter: blur(4px); }
+  .btn-ghost:hover { transform: translateY(-3px); background: rgba(251,247,239,0.12); border-color: rgba(251,247,239,0.9); }
+
+  .btn-ink { background: #0A2A38; color: #FBF7EF; box-shadow: 0 14px 30px -14px rgba(10,42,56,0.7); }
+  .btn-ink:hover { transform: translateY(-3px); box-shadow: 0 24px 46px -16px rgba(10,42,56,0.7); }
+
+  /* ---------- Hero ---------- */
+  .hero-shadow { text-shadow: 0 2px 28px rgba(6,26,36,0.55), 0 1px 3px rgba(6,26,36,0.5); }
+  .hero-img { position: absolute; inset: 0; background-position: center 42%; background-size: cover; animation: kenburns 34s ease-in-out infinite alternate; will-change: transform; transform-origin: center 40%; }
+  @keyframes kenburns { from { transform: scale(1.01); } to { transform: scale(1.06); } }
+
+  .float-cue { animation: floaty 2.6s ease-in-out infinite; }
+  @keyframes floaty { 0%,100% { transform: translateY(0); opacity: .9; } 50% { transform: translateY(9px); opacity: .5; } }
+
+  .word-flow { background: linear-gradient(105deg, #6FD3C9 0%, #59B6D9 32%, #7F9FE0 55%, #F2A24E 82%, #E9773C 100%); -webkit-background-clip: text; background-clip: text; color: transparent; background-size: 220% auto; animation: flow 9s ease-in-out infinite; }
+  @keyframes flow { 0%,100% { background-position: 0% center; } 50% { background-position: 100% center; } }
+
+  /* ---------- Animated wave dividers ---------- */
+  .waves { position: relative; height: 130px; overflow: hidden; line-height: 0; }
+  .wave { position: absolute; left: 0; right: 0; bottom: 0; background-repeat: repeat-x; background-size: 220px 100%; }
+  .wave-a { height: 62%; opacity: .55; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='40' viewBox='0 0 220 40'%3E%3Cpath d='M0 20 Q55 0 110 20 T220 20 L220 40 L0 40 Z' fill='rgb(27,140,140)'/%3E%3C/svg%3E"); animation: waveMove 15s linear infinite; }
+  .wave-b { height: 82%; opacity: .4; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='40' viewBox='0 0 220 40'%3E%3Cpath d='M0 20 Q55 0 110 20 T220 20 L220 40 L0 40 Z' fill='rgb(46,134,168)'/%3E%3C/svg%3E"); animation: waveMove 10s linear infinite reverse; }
+  .wave-c { height: 46%; opacity: .3; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='40' viewBox='0 0 220 40'%3E%3Cpath d='M0 20 Q55 0 110 20 T220 20 L220 40 L0 40 Z' fill='rgb(233,119,60)'/%3E%3C/svg%3E"); animation: waveMove 22s linear infinite; }
+  @keyframes waveMove { to { background-position-x: 220px; } }
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal { opacity: 0; transform: translateY(32px); transition: opacity 1s var(--ease), transform 1s var(--ease); will-change: transform, opacity; }
+  .reveal.in { opacity: 1; transform: none; }
+  .reveal-img { clip-path: inset(0 0 14% 0); opacity: 0; transform: scale(1.04); transition: clip-path 1.2s var(--ease), opacity 1.2s var(--ease), transform 1.2s var(--ease); }
+  .reveal-img.in { clip-path: inset(0 0 0 0); opacity: 1; transform: none; }
+
+  /* ---------- Cards ---------- */
+  .exp-card { transition: transform .55s var(--ease), box-shadow .55s var(--ease); will-change: transform; }
+  .exp-card:hover { transform: translateY(-8px); }
+  .exp-card .exp-media img { transition: transform 1.1s var(--ease); }
+  .exp-card:hover .exp-media img { transform: scale(1.08); }
+  .exp-card .exp-arrow { transition: transform .45s var(--ease), background-color .45s var(--ease), color .45s var(--ease); }
+  .exp-card:hover .exp-arrow { transform: translate(4px,-4px) rotate(0deg); background: #E9773C; color: #0A2A38; }
+
+  /* image color treatment */
+  .treat { position: relative; }
+  .treat::after { content: ""; position: absolute; inset: 0; background: linear-gradient(200deg, rgba(27,140,140,0.20), rgba(10,42,56,0.05) 45%, rgba(233,119,60,0.18)); mix-blend-mode: multiply; pointer-events: none; }
+
+  /* ---------- Marquee ---------- */
+  .marquee { display: flex; width: max-content; animation: marquee 38s linear infinite; }
+  .marquee-wrap:hover .marquee { animation-play-state: paused; }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+
+  /* ---------- Parallax band ---------- */
+  .fixed-bg { background-attachment: fixed; background-position: center; background-size: cover; }
+
+  .quote-underline { background: linear-gradient(transparent 62%, rgba(233,119,60,0.35) 62%); }
+
+  .link-underline { background-image: linear-gradient(currentColor, currentColor); background-size: 0% 1.5px; background-repeat: no-repeat; background-position: 0 100%; transition: background-size .4s var(--ease); }
+  .link-underline:hover { background-size: 100% 1.5px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .hero-img, .float-cue, .word-flow, .wave, .marquee { animation: none !important; }
+    .reveal, .reveal-img { opacity: 1 !important; transform: none !important; clip-path: none !important; transition: none !important; }
+    .fixed-bg { background-attachment: scroll; }
+  }
+</style>
+</head>
+
+<body class="antialiased">
+
+<!-- ============ NAV ============ -->
+<header id="nav" class="fixed top-0 left-0 right-0 z-50 py-5">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between gap-6">
+    <a href="#top" class="flex items-center gap-3 shrink-0" aria-label="Waka Abel Tasman home">
+      <img src="images/Waka-tours-abel-tasman-logo-250.png" alt="Waka Abel Tasman" class="nav-logo h-11 w-auto" />
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-8 text-[0.95rem] font-medium">
+      <a href="#experiences" class="nav-link text-foam/90">Waka Tours</a>
+      <a href="#corporate" class="nav-link text-foam/90">Corporate</a>
+      <a href="#schools" class="nav-link text-foam/90">Schools</a>
+      <a href="#about" class="nav-link text-foam/90">About</a>
+      <a href="#contact" class="nav-link text-foam/90">Contact</a>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a href="#book" class="btn btn-primary text-sm !py-2.5 !px-5">
+        Book
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="top" class="grain relative min-h-[100svh] flex items-end overflow-hidden">
+  <div class="hero-img" style="background-image:url('images/TRAFFORD-8867.jpg')"></div>
+  <!-- overlays -->
+  <div class="absolute inset-0" style="background:linear-gradient(180deg, rgba(8,32,44,0.55) 0%, rgba(8,32,44,0.18) 24%, rgba(8,32,44,0.42) 52%, rgba(8,32,44,0.97) 100%)"></div>
+  <div class="absolute inset-0" style="background:radial-gradient(135% 78% at 8% 102%, rgba(8,32,44,0.80), transparent 58%)"></div>
+  <div class="absolute inset-0 hidden sm:block" style="background:linear-gradient(90deg, rgba(8,32,44,0.55) 0%, rgba(8,32,44,0.12) 42%, transparent 65%)"></div>
+
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 pb-16 sm:pb-24 pt-32 sm:pt-40">
+    <p class="reveal in text-foam/85 uppercase tracking-[0.25em] sm:tracking-[0.32em] text-[0.68rem] sm:text-sm mb-5 sm:mb-6 flex items-center gap-3">
+      <span class="inline-block h-px w-7 sm:w-8 bg-coral shrink-0"></span>
+      <span class="sm:hidden">Abel Tasman · Aotearoa</span>
+      <span class="hidden sm:inline">Kaiteretere · Abel Tasman · Aotearoa</span>
+    </p>
+
+    <h1 class="hero-shadow tracking-tightish font-display font-light text-foam leading-[1.0] sm:leading-[0.92] text-[2.5rem] sm:text-[5rem] lg:text-[6.8rem] max-w-5xl [text-wrap:pretty]">
+      <span class="block">To travel across water is</span>
+      <span class="block">to connect across <span class="word-flow italic">time</span></span>
+      <span class="block">&amp; <span class="word-flow italic">space.</span></span>
+    </h1>
+
+    <p class="hero-shadow mt-6 sm:mt-8 max-w-xl text-foam/90 text-base sm:text-xl leading-relaxed">
+      We feel the motion and te mauri o te wai, just as our tūpuna did. To do it in a group connects you in a way nothing else does.
+    </p>
+
+    <div class="mt-8 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 max-w-md sm:max-w-none">
+      <a href="#book" class="btn btn-primary text-base w-full sm:w-auto justify-center sm:justify-start">
+        Book your trip
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="#experiences" class="btn btn-ghost text-base w-full sm:w-auto justify-center sm:justify-start">
+        Explore the tours
+      </a>
+    </div>
+
+    <p class="hero-shadow mt-8 sm:mt-10 flex items-center gap-3 font-display italic text-foam text-lg sm:text-2xl">
+      <span class="inline-block h-px w-7 bg-foam/40 sm:hidden shrink-0"></span>
+      Nau mai ki Kaiteretere. <span class="text-foam/65 hidden sm:inline">Welcome.</span>
+    </p>
+  </div>
+
+  <a href="#story" class="float-cue absolute bottom-7 left-1/2 -translate-x-1/2 z-10 text-foam/70 hidden sm:block" aria-label="Scroll down">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+  </a>
+</section>
+
+<!-- animated wave divider -->
+<div class="waves bg-foam -mt-1" aria-hidden="true">
+  <div class="wave wave-c"></div>
+  <div class="wave wave-b"></div>
+  <div class="wave wave-a"></div>
+</div>
+
+<!-- ============ TAGLINE STATS ============ -->
+<section class="bg-foam pt-4 pb-16 sm:pb-24">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <p class="reveal font-display italic text-2xl sm:text-3xl text-teal text-center mb-14 tracking-tightish">Connect. Experience. Explore.</p>
+    <div class="reveal grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
+      <div class="text-center border-l border-ink/10 first:border-0 lg:first:border-l lg:border-l px-2">
+        <div class="font-display text-5xl sm:text-6xl text-ink tracking-tightish" data-count="10" data-suffix="+">0</div>
+        <div class="mt-2 text-sm text-sea/70 uppercase tracking-[0.15em]">Years on the water</div>
+      </div>
+      <div class="text-center border-l border-ink/10 px-2">
+        <div class="font-display text-5xl sm:text-6xl text-ink tracking-tightish">#1</div>
+        <div class="mt-2 text-sm text-sea/70 uppercase tracking-[0.15em]">Rated on TripAdvisor</div>
+      </div>
+      <div class="text-center border-l border-ink/10 px-2">
+        <div class="font-display text-5xl sm:text-6xl text-ink tracking-tightish">Gold</div>
+        <div class="mt-2 text-sm text-sea/70 uppercase tracking-[0.15em]">Qualmark award</div>
+      </div>
+      <div class="text-center border-l border-ink/10 px-2">
+        <div class="font-display text-5xl sm:text-6xl text-ink tracking-tightish italic">All</div>
+        <div class="mt-2 text-sm text-sea/70 uppercase tracking-[0.15em]">Nau mai — welcome</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STORY / ABOUT ============ -->
+<section id="story" class="bg-foam pb-24 sm:pb-32">
+  <div id="about" class="max-w-7xl mx-auto px-5 sm:px-8 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+    <div class="reveal-img treat relative rounded-[2rem] overflow-hidden shadow-[0_40px_80px_-40px_rgba(10,42,56,0.55)] order-2 lg:order-1">
+      <img src="images/OWP1646.jpg" alt="Double-hulled waka hourua resting on the golden sand at Abel Tasman" class="w-full h-[440px] sm:h-[560px] object-cover" />
+    </div>
+
+    <div class="order-1 lg:order-2">
+      <p class="reveal uppercase tracking-[0.3em] text-xs text-coral font-semibold mb-5 flex items-center gap-3">
+        <span class="inline-block h-px w-8 bg-coral"></span> Our story
+      </p>
+      <h2 class="reveal font-display font-light text-ink tracking-tightish text-4xl sm:text-5xl lg:text-[3.4rem] leading-[1.05] mb-7">
+        The living expression of our tūpuna
+      </h2>
+      <div class="reveal space-y-5 text-lg text-sea/90 max-w-xl">
+        <p>Waka are the living expression of our tūpuna — the ancestors who read the stars and sailed the Pacific Ocean for thousands of years. Step aboard our <span class="font-semibold text-teal">waka hourua</span>, a double-hulled vessel, and you take your place in that unbroken line.</p>
+        <p>Every trip begins and ends with <span class="font-semibold text-teal">karakia</span>, a blessing for safe passage. Along the way you'll learn the <span class="font-semibold text-teal">tikanga</span> — the etiquette and knowledge carried by the waka — combining idyllic surrounds, exercise, history and tradition.</p>
+      </div>
+
+      <div class="reveal mt-9 flex flex-wrap gap-3">
+        <span class="px-4 py-2 rounded-full bg-teal/10 text-sea text-sm font-medium">Karakia</span>
+        <span class="px-4 py-2 rounded-full bg-teal/10 text-sea text-sm font-medium">Tikanga Māori</span>
+        <span class="px-4 py-2 rounded-full bg-teal/10 text-sea text-sm font-medium">Waka hourua</span>
+        <span class="px-4 py-2 rounded-full bg-teal/10 text-sea text-sm font-medium">Manaakitanga</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PHILOSOPHY BAND (parallax) ============ -->
+<section class="grain relative overflow-hidden">
+  <div class="fixed-bg absolute inset-0" style="background-image:url('images/Keri-blowing-pumoana-opt.jpg')"></div>
+  <div class="absolute inset-0" style="background:linear-gradient(180deg, rgba(10,42,56,0.82), rgba(14,74,95,0.78))"></div>
+  <div class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 py-28 sm:py-40 text-center">
+    <p class="reveal uppercase tracking-[0.35em] text-xs text-sun mb-8">He whakataukī · Our guiding words</p>
+    <blockquote class="reveal font-display font-light italic text-foam tracking-tightish text-3xl sm:text-5xl lg:text-[3.6rem] leading-[1.15]">
+      “Manaaki moana, manaaki tangata, haere whakamua.”
+    </blockquote>
+    <p class="reveal mt-8 text-foam/75 text-lg sm:text-xl max-w-2xl mx-auto">
+      Care for the sea, care for the people, move forward as one.
+    </p>
+  </div>
+</section>
+
+<!-- ============ EXPERIENCES ============ -->
+<section id="experiences" class="bg-foam py-24 sm:py-32">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+      <div>
+        <p class="reveal uppercase tracking-[0.3em] text-xs text-coral font-semibold mb-5 flex items-center gap-3">
+          <span class="inline-block h-px w-8 bg-coral"></span> Ways to paddle
+        </p>
+        <h2 class="reveal font-display font-light text-ink tracking-tightish text-4xl sm:text-5xl lg:text-6xl leading-[1.02] max-w-2xl">
+          Three journeys, one horizon
+        </h2>
+      </div>
+      <p class="reveal text-sea/80 text-lg max-w-sm">Whether you arrive as a whānau, a class or a team, we take you on a journey of discovery on the water.</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
+
+      <!-- Public -->
+      <a href="#book" class="exp-card group block rounded-[1.8rem] overflow-hidden bg-white shadow-[0_30px_60px_-40px_rgba(10,42,56,0.6)]">
+        <div class="exp-media treat relative h-72 overflow-hidden">
+          <img src="images/high-shot-of-waka-on-beach-opt.jpg" alt="Aerial view of waka on a golden Abel Tasman beach" class="w-full h-full object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent"></div>
+          <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-foam/90 text-ink text-xs font-semibold uppercase tracking-wider">Public Trips</span>
+        </div>
+        <div class="p-7">
+          <div class="flex items-start justify-between gap-4">
+            <h3 class="font-display text-2xl text-ink tracking-tightish">Embrace the adventure</h3>
+            <span class="exp-arrow shrink-0 grid place-items-center h-10 w-10 rounded-full bg-teal/10 text-teal">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+            </span>
+          </div>
+          <p class="mt-3 text-sea/80">We take you or your group on a journey of discovery — combining idyllic surrounds, exercise, history and tradition.</p>
+          <span class="mt-5 inline-block text-coral font-semibold link-underline">Choose a Waka Tour</span>
+        </div>
+      </a>
+
+      <!-- Schools -->
+      <a id="schools" href="#book" class="exp-card group block rounded-[1.8rem] overflow-hidden bg-white shadow-[0_30px_60px_-40px_rgba(10,42,56,0.6)]">
+        <div class="exp-media treat relative h-72 overflow-hidden">
+          <img src="images/secondary-students-outdoor-edu-1-opt.jpg" alt="Students learning water safety before a school waka trip" class="w-full h-full object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent"></div>
+          <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-foam/90 text-ink text-xs font-semibold uppercase tracking-wider">School Groups</span>
+        </div>
+        <div class="p-7">
+          <div class="flex items-start justify-between gap-4">
+            <h3 class="font-display text-2xl text-ink tracking-tightish">Learning on the water</h3>
+            <span class="exp-arrow shrink-0 grid place-items-center h-10 w-10 rounded-full bg-teal/10 text-teal">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+            </span>
+          </div>
+          <p class="mt-3 text-sea/80">Outdoor education that fits the curriculum — empowering experiences for kids of all ages, weaving te ao Māori, history, teamwork and physical activity.</p>
+          <span class="mt-5 inline-block text-coral font-semibold link-underline">Explore our School Trips</span>
+        </div>
+      </a>
+
+      <!-- Corporate -->
+      <a id="corporate" href="#book" class="exp-card group block rounded-[1.8rem] overflow-hidden bg-white shadow-[0_30px_60px_-40px_rgba(10,42,56,0.6)]">
+        <div class="exp-media treat relative h-72 overflow-hidden">
+          <img src="images/double-hulled-waka-on-beach-abel-tasman-T-9053-opt.jpg" alt="A team paddling a waka together across the bay" class="w-full h-full object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent"></div>
+          <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-foam/90 text-ink text-xs font-semibold uppercase tracking-wider">Corporate Teams</span>
+        </div>
+        <div class="p-7">
+          <div class="flex items-start justify-between gap-4">
+            <h3 class="font-display text-2xl text-ink tracking-tightish">Move as one team</h3>
+            <span class="exp-arrow shrink-0 grid place-items-center h-10 w-10 rounded-full bg-teal/10 text-teal">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+            </span>
+          </div>
+          <p class="mt-3 text-sea/80">To do it as a group connects you like nothing else. Waka is hard to beat for teambuilding and for empowering individuals within a team.</p>
+          <span class="mt-5 inline-block text-coral font-semibold link-underline">See our Corporate Options</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY / DIFFERENTIATORS ============ -->
+<section class="relative bg-ink text-foam py-24 sm:py-32 overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.5]" style="background:radial-gradient(60% 60% at 85% 10%, rgba(27,140,140,0.35), transparent 60%), radial-gradient(50% 50% at 10% 90%, rgba(233,119,60,0.28), transparent 60%)"></div>
+  <div class="relative max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="max-w-3xl mb-16">
+      <p class="reveal uppercase tracking-[0.3em] text-xs text-sun font-semibold mb-5 flex items-center gap-3">
+        <span class="inline-block h-px w-8 bg-sun"></span> Why Waka Abel Tasman
+      </p>
+      <h2 class="reveal font-display font-light tracking-tightish text-4xl sm:text-5xl lg:text-6xl leading-[1.03]">
+        Guided by people who know these waters
+      </h2>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
+      <div class="reveal">
+        <div class="h-14 w-14 rounded-2xl grid place-items-center bg-teal/15 text-teal mb-5">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="16 8 13 13 8 16 11 11 16 8"/></svg>
+        </div>
+        <h3 class="font-display text-xl mb-2">Skilled cultural navigators</h3>
+        <p class="text-foam/65">Ocean navigators who carry the knowledge of the waka and share it generously.</p>
+      </div>
+
+      <div class="reveal">
+        <div class="h-14 w-14 rounded-2xl grid place-items-center bg-teal/15 text-teal mb-5">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0V4zM17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg>
+        </div>
+        <h3 class="font-display text-xl mb-2">#1 rated on TripAdvisor</h3>
+        <p class="text-foam/65">The top-reviewed experience in the region — loved by whānau and visitors alike.</p>
+      </div>
+
+      <div class="reveal">
+        <div class="h-14 w-14 rounded-2xl grid place-items-center bg-teal/15 text-teal mb-5">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9.5" r="2.3"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5M15.5 20c0-2 .8-3.4 2.3-4.2 2 .3 3.2 1.7 3.2 4.2"/></svg>
+        </div>
+        <h3 class="font-display text-xl mb-2">Groups big &amp; small</h3>
+        <p class="text-foam/65">Large or small groups, or individuals — everyone finds their place on the waka.</p>
+      </div>
+
+      <div class="reveal">
+        <div class="h-14 w-14 rounded-2xl grid place-items-center bg-teal/15 text-teal mb-5">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.3-7-10V6l7-3 7 3v5c0 5.7-7 10-7 10z"/><path d="M9.5 12l1.8 1.8 3.5-3.6"/></svg>
+        </div>
+        <h3 class="font-display text-xl mb-2">Manaakitanga &amp; safety</h3>
+        <p class="text-foam/65">Care and safety sit at the core of everything we do, on the water and off it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section id="reviews" class="bg-foam py-24 sm:py-32">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-14">
+      <div>
+        <p class="reveal uppercase tracking-[0.3em] text-xs text-coral font-semibold mb-5 flex items-center gap-3">
+          <span class="inline-block h-px w-8 bg-coral"></span> Kind words
+        </p>
+        <h2 class="reveal font-display font-light text-ink tracking-tightish text-4xl sm:text-5xl lg:text-6xl leading-[1.02]">
+          Whānau fun, mind expanding
+        </h2>
+      </div>
+      <a href="https://www.tripadvisor.com" target="_blank" rel="noopener" class="reveal shrink-0 inline-flex items-center gap-2 text-sea font-semibold link-underline">
+        Read reviews on TripAdvisor
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+      </a>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
+      <!-- card -->
+      <figure class="reveal bg-white rounded-[1.6rem] p-8 shadow-[0_30px_60px_-45px_rgba(10,42,56,0.6)] flex flex-col">
+        <div class="flex gap-1 text-coral mb-5" aria-label="4 out of 5">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span class="text-ink/15">★</span>
+        </div>
+        <blockquote class="font-display text-lg text-ink leading-relaxed italic flex-1">“Our guide Thomas made a fine job welcoming us to the trip, gently advising novice paddlers, hosting us as we snacked on the beach by Split Apple Rock.”</blockquote>
+        <figcaption class="mt-6 pt-5 border-t border-ink/10 text-sm">
+          <span class="font-semibold text-ink">scotkiwi28</span>
+          <span class="text-sea/60"> · 26 Jan 2022 · TripAdvisor</span>
+        </figcaption>
+      </figure>
+
+      <figure class="reveal bg-white rounded-[1.6rem] p-8 shadow-[0_30px_60px_-45px_rgba(10,42,56,0.6)] flex flex-col">
+        <div class="flex gap-1 text-coral mb-5" aria-label="4 out of 5">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span class="text-ink/15">★</span>
+        </div>
+        <blockquote class="font-display text-lg text-ink leading-relaxed italic flex-1">“Whānau fun, and mind expanding. Great tour unlike anything else we have done in the region — introduced to the basics of waka paddling and tikanga Māori. Cooperative and fun.”</blockquote>
+        <figcaption class="mt-6 pt-5 border-t border-ink/10 text-sm">
+          <span class="font-semibold text-ink">RossC1642</span>
+          <span class="text-sea/60"> · 31 Dec 2021 · TripAdvisor</span>
+        </figcaption>
+      </figure>
+
+      <figure class="reveal bg-white rounded-[1.6rem] p-8 shadow-[0_30px_60px_-45px_rgba(10,42,56,0.6)] flex flex-col">
+        <div class="flex gap-1 text-coral mb-5" aria-label="5 out of 5">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <blockquote class="font-display text-lg text-ink leading-relaxed italic flex-1">“Waka is an inclusive experience where everyone can feel the joy of working as part of a team. If you are visiting Kaiteretere THIS is the tour you should prioritise.”</blockquote>
+        <figcaption class="mt-6 pt-5 border-t border-ink/10 text-sm">
+          <span class="font-semibold text-ink">onebadhobbit</span>
+          <span class="text-sea/60"> · 27 Jan 2023 · TripAdvisor</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AWARDS MARQUEE ============ -->
+<section class="bg-foam pb-24">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <p class="reveal text-center uppercase tracking-[0.3em] text-xs text-sea/60 mb-10">Trusted &amp; accredited</p>
+    <div class="marquee-wrap relative overflow-hidden" style="mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)">
+      <div class="marquee items-center gap-16 pr-16">
+        <img src="images/Qualmark-Gold-Award-Logo-Stacked.jpg" alt="Qualmark Gold Award" class="h-16 w-auto object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition duration-500" />
+        <img src="images/outdoors-mark.png" alt="Outdoors Mark safety audited" class="h-16 w-auto object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition duration-500" />
+        <img src="images/NZ-Maori-Tourism-Logo.jpg" alt="NZ Māori Tourism" class="h-14 w-auto object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition duration-500" />
+        <img src="images/WAT-SMART-Operator-logo_cmyk-with-border.jpg" alt="SMART Operator" class="h-16 w-auto object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition duration-500" />
+        <img src="images/makingtrax.jpg" alt="Making Trax accessible tourism" class="h-14 w-auto object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition duration-500" />
+        <!-- duplicate for seamless loop -->
+        <img src="images/Qualmark-Gold-Award-Logo-Stacked.jpg" alt="" aria-hidden="true" class="h-16 w-auto object-contain grayscale opacity-70" />
+        <img src="images/outdoors-mark.png" alt="" aria-hidden="true" class="h-16 w-auto object-contain grayscale opacity-70" />
+        <img src="images/NZ-Maori-Tourism-Logo.jpg" alt="" aria-hidden="true" class="h-14 w-auto object-contain grayscale opacity-70" />
+        <img src="images/WAT-SMART-Operator-logo_cmyk-with-border.jpg" alt="" aria-hidden="true" class="h-16 w-auto object-contain grayscale opacity-70" />
+        <img src="images/makingtrax.jpg" alt="" aria-hidden="true" class="h-14 w-auto object-contain grayscale opacity-70" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA / BOOK ============ -->
+<section id="book" class="grain relative overflow-hidden">
+  <div class="fixed-bg absolute inset-0" style="background-image:url('images/hongi-group-1-opt.jpg')"></div>
+  <div class="absolute inset-0" style="background:linear-gradient(120deg, rgba(10,42,56,0.92) 0%, rgba(14,74,95,0.72) 55%, rgba(27,140,140,0.5) 100%)"></div>
+  <div class="relative z-10 max-w-4xl mx-auto px-5 sm:px-8 py-28 sm:py-36 text-center">
+    <p class="reveal uppercase tracking-[0.32em] text-xs text-sun mb-6">Haere mai · Come aboard</p>
+    <h2 class="reveal font-display font-light text-foam tracking-tightish text-4xl sm:text-6xl leading-[1.03] mb-7">
+      Ready to feel the motion of the water?
+    </h2>
+    <p class="reveal text-foam/80 text-lg sm:text-xl max-w-2xl mx-auto mb-10">
+      Book your place on the waka, or get in touch and we'll help you plan the perfect trip for your whānau, class or team.
+    </p>
+    <div class="reveal flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a href="#contact" class="btn btn-primary text-base">
+        Book now
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="#contact" class="btn btn-ghost text-base">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="bg-foam py-24 sm:py-32">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
+    <div>
+      <p class="reveal uppercase tracking-[0.3em] text-xs text-coral font-semibold mb-5 flex items-center gap-3">
+        <span class="inline-block h-px w-8 bg-coral"></span> Find us
+      </p>
+      <h2 class="reveal font-display font-light text-ink tracking-tightish text-4xl sm:text-5xl leading-[1.03] mb-4">
+        At the Kaiteretere Boat Ramp
+      </h2>
+      <p class="reveal text-sea/80 text-lg mb-10 max-w-md">Kaiteretere, at the golden gateway to the Abel Tasman National Park, Aotearoa New Zealand.</p>
+
+      <div class="grid sm:grid-cols-2 gap-6">
+        <div class="reveal">
+          <p class="text-xs uppercase tracking-[0.2em] text-sea/50 mb-2">Call us</p>
+          <a href="tel:0800925228" class="block font-display text-2xl text-ink link-underline w-max">0800 925 228</a>
+          <a href="tel:0275278160" class="block font-display text-xl text-ink/80 link-underline w-max mt-1">027 527 8160</a>
+        </div>
+        <div class="reveal">
+          <p class="text-xs uppercase tracking-[0.2em] text-sea/50 mb-2">Email</p>
+          <a href="mailto:info@wakaabeltasman.nz" class="font-display text-2xl text-ink link-underline w-max break-all">info@wakaabeltasman.nz</a>
+        </div>
+      </div>
+
+      <div class="reveal mt-10 flex flex-wrap gap-3">
+        <a href="https://www.facebook.com" target="_blank" rel="noopener" class="h-11 w-11 grid place-items-center rounded-full bg-ink text-foam hover:bg-coral hover:text-ink transition-colors duration-300" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M13 22v-8h2.6l.4-3H13V9c0-.9.3-1.5 1.6-1.5H16V4.8c-.3 0-1.2-.1-2.3-.1-2.3 0-3.7 1.4-3.7 3.9V11H7.5v3H10v8h3z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/wakaabeltasman" target="_blank" rel="noopener" class="h-11 w-11 grid place-items-center rounded-full bg-ink text-foam hover:bg-coral hover:text-ink transition-colors duration-300" aria-label="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://www.tripadvisor.com" target="_blank" rel="noopener" class="h-11 px-4 grid place-items-center rounded-full bg-ink text-foam hover:bg-coral hover:text-ink transition-colors duration-300 text-sm font-semibold" aria-label="TripAdvisor">TripAdvisor</a>
+        <a href="https://wa.me/64275278160" target="_blank" rel="noopener" class="h-11 px-4 grid place-items-center rounded-full bg-ink text-foam hover:bg-coral hover:text-ink transition-colors duration-300 text-sm font-semibold" aria-label="WhatsApp">WhatsApp</a>
+      </div>
+    </div>
+
+    <div class="reveal-img treat relative rounded-[2rem] overflow-hidden shadow-[0_40px_80px_-40px_rgba(10,42,56,0.55)]">
+      <img src="images/footer-map-high-res.png" alt="Map showing Kaiteretere and the Abel Tasman" class="w-full h-[380px] sm:h-[480px] object-cover bg-wai/10" />
+      <div class="absolute bottom-5 left-5 right-5 bg-foam/90 backdrop-blur rounded-2xl px-5 py-4 flex items-center gap-4">
+        <span class="h-11 w-11 shrink-0 grid place-items-center rounded-full bg-coral text-ink">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        </span>
+        <div>
+          <p class="font-semibold text-ink leading-tight">Kaiteretere Boat Ramp</p>
+          <p class="text-sm text-sea/70">Abel Tasman · Aotearoa NZ</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- wave divider into footer -->
+<div class="waves bg-ink" aria-hidden="true" style="transform:scaleY(-1)">
+  <div class="wave wave-c"></div>
+  <div class="wave wave-b"></div>
+  <div class="wave wave-a"></div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-ink text-foam/80 pt-20 pb-10">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="grid md:grid-cols-[1.4fr_1fr_1fr] gap-12 pb-14 border-b border-foam/10">
+      <div>
+        <img src="images/Waka-tours-abel-tasman-logo-250.png" alt="Waka Abel Tasman" class="h-14 w-auto mb-6" style="filter:brightness(0) invert(1)" />
+        <p class="max-w-xs text-foam/60 leading-relaxed">To travel across water is to connect across time and space. Nau mai ki Kaiteretere.</p>
+      </div>
+
+      <nav class="flex flex-col gap-3">
+        <p class="text-xs uppercase tracking-[0.2em] text-sun mb-1">Explore</p>
+        <a href="#experiences" class="link-underline w-max text-foam/80 hover:text-foam">Waka Tours</a>
+        <a href="#corporate" class="link-underline w-max text-foam/80 hover:text-foam">Corporate Groups</a>
+        <a href="#schools" class="link-underline w-max text-foam/80 hover:text-foam">Schools</a>
+        <a href="#about" class="link-underline w-max text-foam/80 hover:text-foam">About us</a>
+        <a href="#contact" class="link-underline w-max text-foam/80 hover:text-foam">Contact</a>
+      </nav>
+
+      <div class="flex flex-col gap-3">
+        <p class="text-xs uppercase tracking-[0.2em] text-sun mb-1">Get in touch</p>
+        <a href="tel:0800925228" class="link-underline w-max text-foam/80 hover:text-foam">0800 925 228</a>
+        <a href="tel:0275278160" class="link-underline w-max text-foam/80 hover:text-foam">027 527 8160</a>
+        <a href="mailto:info@wakaabeltasman.nz" class="link-underline w-max text-foam/80 hover:text-foam break-all">info@wakaabeltasman.nz</a>
+        <p class="text-foam/60">Kaiteretere Boat Ramp,<br/>Abel Tasman, Aotearoa NZ</p>
+      </div>
+    </div>
+
+    <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-foam/55">
+      <p>© 2026 Waka Abel Tasman. All rights reserved.</p>
+      <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+        <a href="#" class="link-underline hover:text-foam">Privacy Policy</a>
+        <a href="#" class="link-underline hover:text-foam">Cancellation Policy</a>
+        <a href="#" class="link-underline hover:text-foam">Site Map</a>
+      </div>
+      <p>Built with <span class="text-coral">♥</span> in Aotearoa</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---- Nav scroll state ----
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // ---- Reveal on scroll ----
+  const revealEls = document.querySelectorAll('.reveal, .reveal-img');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (prefersReduced) {
+    revealEls.forEach(el => el.classList.add('in'));
+  } else {
+    // stagger siblings within a common grid/flow
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const delay = el.dataset.delay ? parseInt(el.dataset.delay) : 0;
+          setTimeout(() => el.classList.add('in'), delay);
+          io.unobserve(el);
+        }
+      });
+    }, { threshold: 0.16, rootMargin: '0px 0px -8% 0px' });
+
+    revealEls.forEach((el) => io.observe(el));
+
+    // auto-stagger grouped cards
+    document.querySelectorAll('.grid').forEach((grid) => {
+      const kids = grid.querySelectorAll(':scope > .reveal, :scope > .reveal-img');
+      kids.forEach((k, i) => k.dataset.delay = i * 90);
+    });
+  }
+
+  // ---- Count up ----
+  const counters = document.querySelectorAll('[data-count]');
+  const cio = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const target = parseInt(el.dataset.count);
+      const suffix = el.dataset.suffix || '';
+      if (prefersReduced) { el.textContent = target + suffix; cio.unobserve(el); return; }
+      let cur = 0;
+      const step = Math.max(1, Math.round(target / 28));
+      const tick = () => {
+        cur = Math.min(target, cur + step);
+        el.textContent = cur + suffix;
+        if (cur < target) requestAnimationFrame(tick);
+      };
+      tick();
+      cio.unobserve(el);
+    });
+  }, { threshold: 0.6 });
+  counters.forEach((c) => cio.observe(c));
+</script>
+</body>
+</html>

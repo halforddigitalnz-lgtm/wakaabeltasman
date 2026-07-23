@@ -1,0 +1,15 @@
+# Local tooling & scratch
+.claude/
+temporary screenshots/
+review.html
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
+
+# Node
+node_modules/
+
+# Project tooling instructions (machine-specific)
+CLAUDE.md
