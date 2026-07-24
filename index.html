@@ -81,14 +81,29 @@
   .btn-ink:hover { transform: translateY(-3px); box-shadow: 0 24px 46px -16px rgba(10,42,56,0.7); }
 
   /* ---------- Hero ---------- */
-  .hero-shadow { text-shadow: 0 2px 28px rgba(6,26,36,0.55), 0 1px 3px rgba(6,26,36,0.5); }
-  .hero-img { position: absolute; inset: 0; background-position: center 42%; background-size: cover; animation: kenburns 34s ease-in-out infinite alternate; will-change: transform; transform-origin: center 40%; }
-  @keyframes kenburns { from { transform: scale(1.01); } to { transform: scale(1.06); } }
+  .hero-shadow { text-shadow: 0 2px 30px rgba(4,20,28,0.6), 0 1px 3px rgba(4,20,28,0.55); }
+
+  /* image shuffle: 5 crossfading slides, each ~7s, 35s loop */
+  .hero-slide { position: absolute; inset: 0; background-size: cover; background-position: center 46%; opacity: 0; will-change: opacity, transform; animation: heroShuffle 35s linear infinite; }
+  @keyframes heroShuffle {
+    0%   { opacity: 0; transform: scale(1.03); }
+    2%   { opacity: 1; }
+    18%  { opacity: 1; }
+    20%  { opacity: 0; transform: scale(1.11); }
+    100% { opacity: 0; transform: scale(1.11); }
+  }
+
+  /* drifting coloured light for extra movement */
+  .hero-sheen { position: absolute; inset: -15%; pointer-events: none; mix-blend-mode: screen; opacity: 0.75;
+    background: radial-gradient(38% 46% at 28% 40%, rgba(46,134,168,0.30), transparent 62%),
+                radial-gradient(44% 52% at 76% 66%, rgba(233,119,60,0.22), transparent 60%);
+    animation: heroSheen 17s ease-in-out infinite alternate; will-change: transform; }
+  @keyframes heroSheen { from { transform: translate3d(-2.5%, 1.5%, 0) rotate(0deg); } to { transform: translate3d(3.5%, -2%, 0) rotate(4deg); } }
 
   .float-cue { animation: floaty 2.6s ease-in-out infinite; }
   @keyframes floaty { 0%,100% { transform: translateY(0); opacity: .9; } 50% { transform: translateY(9px); opacity: .5; } }
 
-  .word-flow { background: linear-gradient(105deg, #6FD3C9 0%, #59B6D9 32%, #7F9FE0 55%, #F2A24E 82%, #E9773C 100%); -webkit-background-clip: text; background-clip: text; color: transparent; background-size: 220% auto; animation: flow 9s ease-in-out infinite; }
+  .word-flow { background: linear-gradient(105deg, #9BFBEC 0%, #6FE0F5 28%, #86C4FF 50%, #C9B6FF 66%, #FFCE7A 84%, #FFA766 100%); -webkit-background-clip: text; background-clip: text; color: transparent; background-size: 220% auto; animation: flow 9s ease-in-out infinite; text-shadow: none; }
   @keyframes flow { 0%,100% { background-position: 0% center; } 50% { background-position: 100% center; } }
 
   /* ---------- Animated wave dividers ---------- */
@@ -132,7 +147,9 @@
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .hero-img, .float-cue, .word-flow, .wave, .marquee { animation: none !important; }
+    .hero-slide, .hero-sheen, .float-cue, .word-flow, .wave, .marquee { animation: none !important; }
+    .hero-slide { opacity: 0 !important; transform: none !important; }
+    .hero-slide:first-of-type { opacity: 1 !important; }
     .reveal, .reveal-img { opacity: 1 !important; transform: none !important; clip-path: none !important; transition: none !important; }
     .fixed-bg { background-attachment: scroll; }
   }
@@ -167,14 +184,22 @@
 
 <!-- ============ HERO ============ -->
 <section id="top" class="grain relative min-h-[100svh] flex items-end overflow-hidden">
-  <div class="hero-img" style="background-image:url('images/TRAFFORD-8867.jpg')"></div>
-  <!-- overlays -->
-  <div class="absolute inset-0" style="background:linear-gradient(180deg, rgba(8,32,44,0.55) 0%, rgba(8,32,44,0.18) 24%, rgba(8,32,44,0.42) 52%, rgba(8,32,44,0.97) 100%)"></div>
-  <div class="absolute inset-0" style="background:radial-gradient(135% 78% at 8% 102%, rgba(8,32,44,0.80), transparent 58%)"></div>
-  <div class="absolute inset-0 hidden sm:block" style="background:linear-gradient(90deg, rgba(8,32,44,0.55) 0%, rgba(8,32,44,0.12) 42%, transparent 65%)"></div>
+  <!-- image shuffle -->
+  <div class="absolute inset-0 overflow-hidden bg-ink" aria-hidden="true">
+    <div class="hero-slide" style="background-image:url('images/235211-abel-tasman-national-park-nelson.jpg'); animation-delay:0s"></div>
+    <div class="hero-slide" style="background-image:url('images/TRAFFORD-8867.jpg'); animation-delay:7s"></div>
+    <div class="hero-slide" style="background-image:url('images/Kaimahi-wananga-November-2021-3842-scaled.jpg'); animation-delay:14s"></div>
+    <div class="hero-slide" style="background-image:url('images/OWP1646.jpg'); animation-delay:21s"></div>
+    <div class="hero-slide" style="background-image:url('images/high-shot-of-waka-on-beach-opt.jpg'); animation-delay:28s"></div>
+  </div>
+  <!-- drifting coloured light + darker gradient overlays (kept, brightened text) -->
+  <div class="hero-sheen"></div>
+  <div class="absolute inset-0" style="background:linear-gradient(180deg, rgba(6,26,36,0.62) 0%, rgba(6,26,36,0.32) 26%, rgba(6,26,36,0.55) 54%, rgba(6,26,36,0.98) 100%)"></div>
+  <div class="absolute inset-0" style="background:radial-gradient(135% 80% at 8% 104%, rgba(6,26,36,0.86), transparent 56%)"></div>
+  <div class="absolute inset-0 hidden sm:block" style="background:linear-gradient(90deg, rgba(6,26,36,0.62) 0%, rgba(6,26,36,0.16) 44%, transparent 66%)"></div>
 
   <div class="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 pb-16 sm:pb-24 pt-32 sm:pt-40">
-    <p class="reveal in text-foam/85 uppercase tracking-[0.25em] sm:tracking-[0.32em] text-[0.68rem] sm:text-sm mb-5 sm:mb-6 flex items-center gap-3">
+    <p class="reveal in text-foam uppercase tracking-[0.25em] sm:tracking-[0.32em] text-[0.68rem] sm:text-sm mb-5 sm:mb-6 flex items-center gap-3 hero-shadow">
       <span class="inline-block h-px w-7 sm:w-8 bg-coral shrink-0"></span>
       <span class="sm:hidden">Abel Tasman · Aotearoa</span>
       <span class="hidden sm:inline">Kaiteretere · Abel Tasman · Aotearoa</span>
@@ -186,7 +211,7 @@
       <span class="block">&amp; <span class="word-flow italic">space.</span></span>
     </h1>
 
-    <p class="hero-shadow mt-6 sm:mt-8 max-w-xl text-foam/90 text-base sm:text-xl leading-relaxed">
+    <p class="hero-shadow mt-6 sm:mt-8 max-w-xl text-foam text-base sm:text-xl leading-relaxed">
       We feel the motion and te mauri o te wai, just as our tūpuna did. To do it in a group connects you in a way nothing else does.
     </p>
 
